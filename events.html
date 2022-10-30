@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=jQuery, initial-scale=1.0">
+    <title>jQuery Events</title>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#button1").click(function () {
+                window.alert("Button has been clicked");
+            });
+            $("#button2").bind("click", function () {
+                window.alert("Button has been clicked");
+            });
+            $("#button3").on("click", function () {
+                window.alert("Button has been clicked");
+            });
+            $(".button4").on("click", function () {
+                window.alert("Button has been clicked");
+            });
+            $("#div1").width("400px").height("400px").css("background-color", "gray").css("text-align", "center").on({
+                click: function() {
+                window.alert("Div has been clicked");
+                $("#span1").text("Div has been clicked");
+            },
+                mouseenter: function() {
+                window.alert("Mouse entered the div");
+                $("#span1").text("Mouse entered the div");
+            },
+                mouseleave: function() {
+                window.alert("Mouse left the div");
+                $("#span1").text("Mouse left the div");
+            }    
+            });
+            $("#modulemedia").on("click", function(e) {
+                e.preventDefault();
+                $(this).css("color", "red");
+                window.alert(e.target.nodeName + " triggered the event");
+            });
+            $(window).resize(function () {
+                $("#resizeWindow").text("Width : " + $(window).width() + "  Height : " + $(window).height());
+            });
+            $("#textField").on({
+                "focus" : function() {
+                    $("#textField").css("background-color", "#D3D3D3");
+                },
+                "blur" : function() {
+                    $("#textField").css("background-color", "white");
+                }
+            });
+            $("#form1").on("submit", function(e) {
+            e.preventDefault();
+            var error_css = { "border" : "2px solid red"} , success_css = {"border" : "2px solid green"}
+            var flag = true
+            var errorMsg = ""
+            for(var i of [$("#name"),$("#email")]){
+                if(i.val() == "")
+                {
+                    flag = false
+                    i.css(error_css)
+                    errorMsg += ` Please enter ${i  .attr('placeholder')} \n`
+                }else{
+                    i.css(success_css)
+                }
+                if(flag == false)
+                    window.alert(errorMsg)
+            }
+        });  
+    });
+    </script>
+</head>
+<body>
+    <button id="button1">Click</button>
+    <button id="button2">Click with Bind</button>
+    <button id="button3">Click with On</button>
+    <button class="button4">Click1</button>
+    <button class="button4">Click2</button>
+    <br><br>
+    <div id="div1">Div</div>
+    <br><br>
+    <span id="span1">Span</span>
+    <br><br>
+    <a href="http://modulemedia.com" id="modulemedia">ModuleMedia</a>
+    <br><br>
+    <div id="resizeWindow">Div</div>
+    <br><br>
+    <input type="text" id="textField">
+    <br><br>
+    <form id="form1">
+        <input type="text" id="name" placeholder="name">
+        <input type="text" id="email" placeholder="email">
+        <input type="submit">
+    </form>
+</body>
+</html>
